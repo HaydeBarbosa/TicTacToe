@@ -44,7 +44,7 @@ class Board extends React.Component {
   render() {
 
     return (
-      <div>
+      <div className="board">
         <div className="board-row">
           {this.renderSquare(0)}
           {this.renderSquare(1)}
@@ -131,16 +131,14 @@ class Game extends React.Component {
 
     return (
       <div className="game">
-        <div className="game-board">
           <Board
             squares={current.squares}
             onClick={(i)=>this.handleClick(i)}
             linea={linea}
           />
-        </div>
         <div className="titulos">
-          <span className="main">tic tac toe</span><br />
-          <span className="sadjoke">the closest thing to an actual team fortres 2 update</span>
+          <div className="main">tic tac toe</div>
+          <div className="sadjoke">the closest thing to a team fortress 2 update so far</div>
         </div>
         <div className="game-info">
           <div>{status}</div>

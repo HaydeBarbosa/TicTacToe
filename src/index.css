@@ -7,18 +7,58 @@
 }
 
 @font-face {
-  font-family: 'tf2';
-  font-style: normal;
-  src: url('./tf2build.ttf') format('truetype')
+  font-family: tf2;
+  src: url(tf2build.ttf);
 }
 
-body {
-  font: 14px "Century Gothic", Futura, sans-serif;
-  margin: 20px;
+.game {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  height: 75.4vw;
+  max-height: calc(456px + 4vw);
 }
 
-ol, ul {
-  padding-left: 30px;
+.board {
+  height: auto;
+  padding: 1vw 1vw 1vw 0;
+  margin: auto 0 auto auto;
+}
+
+.titulos{
+  color: black;
+  writing-mode: vertical-rl;
+  font-family: tf2;
+  height: auto;
+  padding: .5vw 0 1.5vw 0;
+  margin: auto auto 0 0;
+  -ms-transform: rotate(180deg); /* IE 9 */
+  -webkit-transform: rotate(180deg); /* Safari prior 9.0 */
+  transform: rotate(180deg); 
+}
+
+.status {
+  height: 25%;
+  width: auto;
+}
+
+.square {
+  width: 18vw;
+  height: 23.8vw;
+  border: none;
+  background-size: cover;
+  margin: .5vw;
+  max-width: var(--merc-width);
+  max-height: var(--mer-height);
+}
+
+.titulos .main{
+  text-align: justify;
+  font-size: 2em;
+}
+
+.titulos .sadjoke{
+  font-size: .8em;
 }
 
 .board-row:after {
@@ -27,54 +67,21 @@ ol, ul {
   display: table;
 }
 
-.status {
-  margin-bottom: 10px;
-}
-
-.square {
-  background: #fff;
-  width: var(--merc-width);
-  height: var(--mer-height);
-  border: none;
-  float: left;
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 0;
-  margin: 3.5px;
-  padding: 0;
-  text-align: center;
-  
-}
-
 .ganador{
-  -webkit-animation: shadow-drop-2-center 0.4s linear both;
-          animation: shadow-drop-2-center 0.4s linear both;
+  animation: shadow-drop-2-center 0.4s linear both;
 }
 
-.titulos{
-  color: black;
-  writing-mode: sideways-lr;
-  font-family: tf2;
-  padding-bottom: .2em;
-}
 
-.titulos .main{
-  font-size: 5em;
-  padding-left: .5em;
-}
-.titulos .sadjoke{
-  font-size: 1em;
-}
 
-.coin-flip{
-  -webkit-transition-duration: var(--flip-time); /* Safari */
+
+
+.coin-flip{ /* Safari */
   transition-duration: var(--flip-time);  
 }
 
 .coin-flip:hover {
   /*margin: 10px;*/
-  -webkit-animation: rotate-scale-down-ver var(--flip-time) linear ;
-          animation: rotate-scale-down-ver var(--flip-time) linear ;
+  animation: rotate-scale-down-ver var(--flip-time) linear ;
 }
 
 .rotate-scale-down-ver {
@@ -89,16 +96,9 @@ ol, ul {
   background: #ddd;
 }
 
-.game {
-  display: flex;
-  flex-direction: row;
-  text-align: center;
-  justify-content: center;
-  margin-top: 10vh;
-}
-
 .game-info {
-  margin-left: 20px;
+  position: fixed;
+  bottom: 0;
 }
 
 .mercImg{
@@ -109,56 +109,24 @@ ol, ul {
 
 
 /*Animacion chida*/
-@-webkit-keyframes rotate-scale-down-ver {
-  0% {
-    -webkit-transform: scale(1) rotateY(0);
-            transform: scale(1) rotateY(0);
-  }
-  50% {
-    -webkit-transform: scale(0.5) rotateY(180deg);
-            transform: scale(0.5) rotateY(180deg);
-  }
-  100% {
-    -webkit-transform: scale(1) rotateY(360deg);
-            transform: scale(1) rotateY(360deg);
-  }
-}
 @keyframes rotate-scale-down-ver {
   0% {
-    -webkit-transform: scale(1) rotateY(0);
-            transform: scale(1) rotateY(0);
+    transform: scale(1) rotateY(0);
   }
   50% {
-    -webkit-transform: scale(0.5) rotateY(180deg);
-            transform: scale(0.5) rotateY(180deg);
+    transform: scale(0.5) rotateY(180deg);
   }
   100% {
-    -webkit-transform: scale(1) rotateY(360deg);
-            transform: scale(1) rotateY(360deg);
-  }
-}
-
-@-webkit-keyframes shadow-drop-2-center {
-  0% {
-    -webkit-transform: translateZ(0);
-            transform: translateZ(0);
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-  }
-  100% {
-    -webkit-transform: translateZ(50px);
-            transform: translateZ(50px);
-    box-shadow: 10px 0 10px 5px rgba(0, 0, 0, .9);
+    transform: scale(1) rotateY(360deg);
   }
 }
 @keyframes shadow-drop-2-center {
   0% {
-    -webkit-transform: translateZ(0);
-            transform: translateZ(0);
+    transform: translateZ(0);
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   }
   100% {
-    -webkit-transform: translateZ(50px);
-            transform: translateZ(50px);
+    transform: translateZ(50px);
     box-shadow: 10px 0 10px 5px rgba(0, 0, 0, .9);
   }
 }
