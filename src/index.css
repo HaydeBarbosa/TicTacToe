@@ -1,3 +1,17 @@
+:root{
+  --red: #b8383b;
+  --blu: #5885a2;
+  --merc-width: 115px;
+  --mer-height: 152px;
+  --flip-time: 0.1s;
+}
+
+@font-face {
+  font-family: 'tf2';
+  font-style: normal;
+  src: url('./tf2build.ttf') format('truetype')
+}
+
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
   margin: 20px;
@@ -19,17 +33,52 @@ ol, ul {
 
 .square {
   background: #fff;
-  border: 1px solid #999;
+  width: var(--merc-width);
+  height: var(--mer-height);
+  border: none;
   float: left;
   font-size: 24px;
   font-weight: bold;
-  line-height: 34px;
-  height: 34px;
-  margin-right: -1px;
-  margin-top: -1px;
+  line-height: 0;
+  margin: 3.5px;
   padding: 0;
   text-align: center;
-  width: 34px;
+  
+}
+
+.ganador{
+  -webkit-animation: shadow-drop-2-center 0.4s linear both;
+          animation: shadow-drop-2-center 0.4s linear both;
+}
+
+.titulos{
+  color: black;
+  writing-mode: sideways-lr;
+  font-family: tf2;
+  padding-bottom: .2em;
+}
+
+.titulos .main{
+  font-size: 5em;
+  padding-left: .5em;
+}
+.titulos .sadjoke{
+  font-size: 1em;
+}
+
+.coin-flip{
+  -webkit-transition-duration: var(--flip-time); /* Safari */
+  transition-duration: var(--flip-time);  
+}
+
+.coin-flip:hover {
+  /*margin: 10px;*/
+  -webkit-animation: rotate-scale-down-ver var(--flip-time) linear ;
+          animation: rotate-scale-down-ver var(--flip-time) linear ;
+}
+
+.rotate-scale-down-ver {
+  
 }
 
 .square:focus {
@@ -43,8 +92,73 @@ ol, ul {
 .game {
   display: flex;
   flex-direction: row;
+  text-align: center;
+  justify-content: center;
+  margin-top: 10vh;
 }
 
 .game-info {
   margin-left: 20px;
+}
+
+.mercImg{
+  width: 22%;
+  height: auto;
+}
+
+
+
+/*Animacion chida*/
+@-webkit-keyframes rotate-scale-down-ver {
+  0% {
+    -webkit-transform: scale(1) rotateY(0);
+            transform: scale(1) rotateY(0);
+  }
+  50% {
+    -webkit-transform: scale(0.5) rotateY(180deg);
+            transform: scale(0.5) rotateY(180deg);
+  }
+  100% {
+    -webkit-transform: scale(1) rotateY(360deg);
+            transform: scale(1) rotateY(360deg);
+  }
+}
+@keyframes rotate-scale-down-ver {
+  0% {
+    -webkit-transform: scale(1) rotateY(0);
+            transform: scale(1) rotateY(0);
+  }
+  50% {
+    -webkit-transform: scale(0.5) rotateY(180deg);
+            transform: scale(0.5) rotateY(180deg);
+  }
+  100% {
+    -webkit-transform: scale(1) rotateY(360deg);
+            transform: scale(1) rotateY(360deg);
+  }
+}
+
+@-webkit-keyframes shadow-drop-2-center {
+  0% {
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+  100% {
+    -webkit-transform: translateZ(50px);
+            transform: translateZ(50px);
+    box-shadow: 10px 0 10px 5px rgba(0, 0, 0, .9);
+  }
+}
+@keyframes shadow-drop-2-center {
+  0% {
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+  100% {
+    -webkit-transform: translateZ(50px);
+            transform: translateZ(50px);
+    box-shadow: 10px 0 10px 5px rgba(0, 0, 0, .9);
+  }
 }
