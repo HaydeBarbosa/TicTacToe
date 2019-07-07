@@ -1,6 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import SoundFX from 'sound-fx';
+
 import './index.css';
+
+//sound exporting
+import flip from './audio/flip1.wav'
+import demo from './audio/demo.mp3'
+import engi from './audio/engi.mp3'
+import heavy from './audio/heavy.mp3'
+import medic from './audio/medic.mp3'
+import pyro from './audio/pyro.mp3'
+import scout from './audio/scout.mp3'
+import sniper from './audio/sniper.mp3'
+import soldier from './audio/soldier.mp3'
+import spy from './audio/spy.mp3'
+import stalemate from './audio/stalemate.mp3'
+
+const sfx = new SoundFX();
+sfx.load(flip, 'flip');
+sfx.load(demo, 'demo');
+sfx.load(engi, 'engi');
+sfx.load(heavy, 'heavy');
+sfx.load(medic, 'medic');
+sfx.load(pyro, 'pyro');
+sfx.load(scout, 'scout');
+sfx.load(sniper, 'sniper');
+sfx.load(soldier, 'soldier');
+sfx.load(spy, 'spy');
+sfx.load(stalemate, 'stalemate');
 
 const merc = ['demo', 'heavy', 'spy',
               'engi', 'pyro', 'medic',
@@ -10,22 +38,52 @@ const merc = ['demo', 'heavy', 'spy',
 const Square =(props) => {
   let backImg = require(`./img/${merc[props.id]}-bw.png`);
   let clases = "square coin-flip";
+  let sound = "flip";
   if(props.value) {
     clases = "square";
+    sound = "";
     if(props.value==='Red') backImg = require(`./img/${merc[props.id]}-red.png`);
     else backImg = require(`./img/${merc[props.id]}-blu.png`);
   }
-  if(props.linea) if(props.linea.includes(props.id)) clases += " ganador"
-
-  return (
+  if(props.linea) if(props.linea.includes(props.id)) clases += " ganador";
+ return (
     <button 
       className={clases}
       onClick={props.onClick}
-      style={{
-        backgroundImage: `url(${backImg})`,
-      }}
+      style={{ backgroundImage: `url(${backImg})`}}
+      onMouseOver={() => {sfx.play(sound);}}
     >
     </button>
+  );
+}
+
+const ScoreBoard = (props) =>{
+  return(
+    <div className="score-board">
+      <TeamBoard
+        active={!props.xIsNext}
+        class=" blu"
+        team="BLU"
+      />
+      <TeamBoard
+        active={props.xIsNext}
+        class=" red"
+        team="RED"
+      />
+    </div>
+  );
+}
+
+const TeamBoard = (props) => {
+  let clases = "team-board";
+  if(props.active) clases += props.class;
+
+  return(
+    <div className={clases}>
+      {props.team}
+    </div>
+
+
   );
 }
 
@@ -37,6 +95,7 @@ class Board extends React.Component {
         value={this.props.squares[i]}
         onClick={()=>this.props.onClick(i)}
         linea={this.props.linea}
+        play={this.props.play}
       />
     );
   }
@@ -93,6 +152,7 @@ class Game extends React.Component {
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
     });
+    sfx.play(merc[i]);
   }
 
   jumpTo = (step) =>{
@@ -130,19 +190,25 @@ class Game extends React.Component {
     else status = 'Next player: ' + (this.state.xIsNext?'Red':'Blu');
 
     return (
+      <div className="aplicacion">
       <div className="game">
           <Board
             squares={current.squares}
             onClick={(i)=>this.handleClick(i)}
             linea={linea}
+            play={this.play}
           />
         <div className="titulos">
-          <div className="main">tic tac toe</div>
-          <div className="sadjoke">the closest thing to a team fortress 2 update so far</div>
+          <div className="main">TIC TAC TOE</div>
+          <div className="sadjoke">THE CLOSEST THING TO A TEAM FORTRESS 2 UPDATE SO FAR</div>
         </div>
-        <div className="game-info">
-          <div>{status}</div>
-          <ol>{moves}</ol>
+      </div>
+        <div> {/*className="game-info"*/}
+          <ScoreBoard
+            xIsNext={this.state.xIsNext}
+        />
+        {/*<div>{status}</div>
+          <ol>{moves}</ol>*/}
         </div>
       </div>
     );
