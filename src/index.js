@@ -15,7 +15,8 @@ import scout from './audio/scout.mp3'
 import sniper from './audio/sniper.mp3'
 import soldier from './audio/soldier.mp3'
 import spy from './audio/spy.mp3'
-import stalemate from './audio/stalemate.mp3'
+import stale from './audio/stalemate.mp3'
+import win from './audio/win.mp3'
 
 const sfx = new SoundFX();
 sfx.load(flip, 'flip');
@@ -28,7 +29,8 @@ sfx.load(scout, 'scout');
 sfx.load(sniper, 'sniper');
 sfx.load(soldier, 'soldier');
 sfx.load(spy, 'spy');
-sfx.load(stalemate, 'stalemate');
+sfx.load(stale, 'stale');
+sfx.load(win, 'win');
 
 const merc = ['demo', 'heavy', 'spy',
               'engi', 'pyro', 'medic',
@@ -37,14 +39,14 @@ const merc = ['demo', 'heavy', 'spy',
 
 const Square =(props) => {
   let backImg = require(`./img/${merc[props.id]}-bw.png`);
-  let clases = "square coin-flip";
   let sound = "flip";
+  let clases = "square";
   if(props.value) {
-    clases = "square";
     sound = "";
     if(props.value==='Red') backImg = require(`./img/${merc[props.id]}-red.png`);
     else backImg = require(`./img/${merc[props.id]}-blu.png`);
   }
+  else clases += " coin-flip";
   if(props.linea) if(props.linea.includes(props.id)) clases += " ganador";
  return (
     <button 
@@ -57,16 +59,101 @@ const Square =(props) => {
   );
 }
 
+  class Result extends React.Component{
+  soundPlay(sound) {
+    sfx.play(sound);
+  }
+  
+  render(){
+    let clases = "resultados";
+    let ganador = "STALEMATE";
+    let sound = "stale";
+
+    switch(this.props.ganador){
+      case 'Red':
+        ganador = "RED WINS";
+        clases += " red";
+        sound = "win";
+        break;
+      case 'Blu':
+        ganador = "BLU WINS";
+        clases += " blu";
+        sound = "win";
+        break;
+      default:
+        ganador = "STALEMATE"
+        break;
+    }
+
+    if(!this.props.ganador) {
+      clases+=" oculto";
+      return(<div></div>);
+    }
+
+    else
+    {
+      return(
+        <div className={clases} onClick={this.props.resetear}>
+          {ganador}
+          <br/>
+          Click here to play again
+          {sfx.play(sound)}
+        </div>
+      );
+    }
+  }
+
+}
+
+const About = (props) => {
+  return(
+    <div className="alert">
+      <img 
+        id="close-alert"
+        src={require('./img/close-alert.png')} 
+        alt="close the alert box"
+        onClick={props.close}
+      />
+      <div>ALERTS (1)</div>
+      <div className="alert-item">
+          See on GitHub
+        <div className="alert-buttons">
+          <a
+            href="https://github.com/HaydeBarbosa/tic-tac-toe"
+            target="_blank"
+          >
+            <img
+              src={require('./img/eye.png')}
+              alt="see details"
+            />
+          </a>
+          <img
+            src={require('./img/close.png')}
+            alt="close this alert"
+            onClick={props.close}
+          />
+        </div>
+      </div>
+    </div>
+  );}
+
 const ScoreBoard = (props) =>{
+  let blu = !props.xIsNext;
+  let red = props.xIsNext;
+
+  if(props.ganador){
+    blu = false;
+    red = false;
+  }
   return(
     <div className="score-board">
       <TeamBoard
-        active={!props.xIsNext}
+        active={blu}
         class=" blu"
         team="BLU"
       />
       <TeamBoard
-        active={props.xIsNext}
+        active={red}
         class=" red"
         team="RED"
       />
@@ -134,7 +221,15 @@ class Game extends React.Component {
       }],
       stepNumber: 0,
       xIsNext:true,
+      showAlert: false,
     };
+    this.reset=this.reset.bind(this);
+  }
+
+  checkShowAlert = () => {
+    this.setState({
+      showAlert: !this.state.showAlert,
+    });
   }
 
   handleClick(i){
@@ -162,11 +257,21 @@ class Game extends React.Component {
     });
   }
 
+  reset(){
+    this.setState({
+      stepNumber: 0,
+      xIsNext: true,
+    });
+  }
+
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     let linea = null;
     const winner = calculateWinner(current.squares);
+
+    let ganador = null;
 
     const moves = history.map((step, move) => {
       const desc = move ? 'Go to move #' + move : 'Go to game start';
@@ -181,13 +286,16 @@ class Game extends React.Component {
       );
     });
 
+
     let status;
     if(winner){
       status = 'Winner: ' + winner.winner;
-      linea = winner.cuadros;
+      if(winner.cuadros) linea = winner.cuadros;
+      ganador = winner.winner;
     }
 
     else status = 'Next player: ' + (this.state.xIsNext?'Red':'Blu');
+
 
     return (
       <div className="aplicacion">
@@ -202,11 +310,31 @@ class Game extends React.Component {
           <div className="main">TIC TAC TOE</div>
           <div className="sadjoke">THE CLOSEST THING TO A TEAM FORTRESS 2 UPDATE SO FAR</div>
         </div>
+        <Result
+          ganador = {ganador}
+          resetear ={()=>this.jumpTo(0)}
+        />
       </div>
         <div> {/*className="game-info"*/}
           <ScoreBoard
             xIsNext={this.state.xIsNext}
-        />
+            ganador={ganador}
+          />
+          <img
+            id="alert"
+            src={require('./img/alert.png')}
+            alt="you have an alert!"
+            onClick={this.checkShowAlert}
+          />
+          {this.state.showAlert ?
+           <About close={this.checkShowAlert} />
+           : null
+          }  
+
+
+          {/*<About
+            close={()=>this.jumpTo(this.state.stepNumber)}
+          />*/}
         {/*<div>{status}</div>
           <ol>{moves}</ol>*/}
         </div>
@@ -239,5 +367,12 @@ function calculateWinner(squares) {
       return {winner: squares[a], cuadros: lines[i]};
     }
   }
+
+  let stalemate = 0;
+  for(let j=0;j<squares.length;j++){
+    if(squares[j]) stalemate++;
+  }
+  if(stalemate===squares.length) return {winner: "stalemate", cuadros:null}
+
   return null;
 }

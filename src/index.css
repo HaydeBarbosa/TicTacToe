@@ -65,6 +65,7 @@
   margin: .1vw;
   max-width: var(--merc-width);
   max-height: var(--mer-height);
+  cursor: pointer;
 }
 
 .titulos .main{
@@ -112,6 +113,87 @@
   margin: 0 auto;
 }
 
+.alert{
+  position: fixed;
+  top: 5%;
+  right: 5%;
+  min-width: 200px;
+  max-width: 350px;
+  width: 40vw;
+  background-image: linear-gradient(to bottom, #e7d9be, #faeed4 20%);
+  border: .2em solid #faeed4;
+  border-radius: .5em;
+  padding: 1em;
+  font-family: tf2;
+  color: #271B11;
+  font-size: 1em;
+}
+
+.alert-item{
+  background-color: #CFC2A2;
+  padding: .5em;
+  font-family: tf2-secondary;
+  border: .1em solid #C3B899;
+  border-radius: .15em;
+  display: flex;
+  align-items: center;
+}
+
+#close-alert{
+  width: 1.2em;
+  position: absolute;
+  top: .3em;
+  right: .3em;
+  cursor: pointer;
+}
+
+.alert-buttons{
+  margin: 0 0 auto auto;
+  width: auto;
+  display: inline-flex;
+}
+
+.alert-buttons img{
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+#alert{
+  position: fixed;
+  top: 5px;
+  right: 5px;
+  width: 15vw;
+  max-width: 60px;
+  cursor: pointer;
+}
+
+.resultados{
+  background-color: gray;
+  position: fixed;
+  top: 0;
+  width: 40%;
+  height: 5%;
+  min-width: 200px;
+  min-height: 50px;
+  opacity: .88;
+  border: .6vw solid #E6E6E6;
+  border-radius: 1.2vw;
+  text-align: center;
+  padding: 8vh 0;
+  font-family: tf2-secondary;
+  color: #E6E6E6;
+  font-weight: bold;
+  font-size: 1.3em;
+  margin: auto auto;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  max-width: 370px;
+  max-height: 10px;
+  cursor: pointer;
+}
+
 .blu{
   background-color: var(--blu);
 }
@@ -119,7 +201,9 @@
 .red{
   background-color: var(--red);
 }
-
+.oculto{
+  display: none;
+}
 
 
 .coin-flip{ /* Safari */
