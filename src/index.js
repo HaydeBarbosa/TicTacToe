@@ -41,13 +41,17 @@ const Square =(props) => {
   let backImg = require(`./img/${merc[props.id]}-bw.png`);
   let sound = "flip";
   let clases = "square";
+
   if(props.value) {
     sound = "";
     if(props.value==='Red') backImg = require(`./img/${merc[props.id]}-red.png`);
     else backImg = require(`./img/${merc[props.id]}-blu.png`);
   }
+
   else clases += " coin-flip";
+
   if(props.linea) if(props.linea.includes(props.id)) clases += " ganador";
+
  return (
     <button 
       className={clases}
@@ -86,7 +90,6 @@ const Square =(props) => {
     }
 
     if(!this.props.ganador) {
-      clases+=" oculto";
       return(<div></div>);
     }
 
