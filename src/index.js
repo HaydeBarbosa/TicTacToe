@@ -124,6 +124,7 @@ const About = (props) => {
           <a
             href="https://github.com/HaydeBarbosa/tic-tac-toe"
             target="_blank"
+            rel="noopener noreferrer"
           >
             <img
               src={require('./img/eye.png')}
