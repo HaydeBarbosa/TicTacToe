@@ -64,8 +64,11 @@ const Square =(props) => {
 }
 
   class Result extends React.Component{
+
   soundPlay(sound) {
-    sfx.play(sound);
+    if(this.props.playWinnerSound) {
+      sfx.play(sound);
+    }
   }
   
   render(){
@@ -100,7 +103,7 @@ const Square =(props) => {
           {ganador}
           <br/>
           Click here to play again
-          {sfx.play(sound)}
+          {this.soundPlay(sound)}
         </div>
       );
     }
@@ -226,6 +229,7 @@ class Game extends React.Component {
       stepNumber: 0,
       xIsNext:true,
       showAlert: false,
+      playWinnerSound: true,
     };
     this.reset=this.reset.bind(this);
   }
@@ -233,6 +237,7 @@ class Game extends React.Component {
   checkShowAlert = () => {
     this.setState({
       showAlert: !this.state.showAlert,
+      playWinnerSound: false,
     });
   }
 
@@ -258,6 +263,7 @@ class Game extends React.Component {
     this.setState({
       stepNumber: step,
       xIsNext: (step%2) === 0,
+      playWinnerSound: true,
     });
   }
 
@@ -265,6 +271,7 @@ class Game extends React.Component {
     this.setState({
       stepNumber: 0,
       xIsNext: true,
+      playWinnerSound: true,
     });
   }
 
@@ -277,7 +284,7 @@ class Game extends React.Component {
 
     let ganador = null;
 
-    const moves = history.map((step, move) => {
+    history.map((move) => {
       const desc = move ? 'Go to move #' + move : 'Go to game start';
       return (
         <li key={move}>
@@ -291,14 +298,10 @@ class Game extends React.Component {
     });
 
 
-    let status;
     if(winner){
-      status = 'Winner: ' + winner.winner;
       if(winner.cuadros) linea = winner.cuadros;
       ganador = winner.winner;
     }
-
-    else status = 'Next player: ' + (this.state.xIsNext?'Red':'Blu');
 
 
     return (
@@ -316,6 +319,7 @@ class Game extends React.Component {
         </div>
         <Result
           ganador = {ganador}
+          playWinnerSound = {this.state.playWinnerSound}
           resetear ={()=>this.jumpTo(0)}
         />
       </div>

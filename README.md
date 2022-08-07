@@ -1,6 +1,6 @@
 # TIC TAC TOE FORTRESS 2
 
-[Live version aqui](https://haydebarbosa.com/tic-tac-toe/)
+[Live version aqui](https://tic-tac-toe-fortress.haydebarbosa.com)
 
 ## El porque de este proyecto
 Siguiendo el tutorial dado por la documentación oficial de React [Getting Started - React](https://reactjs.org/docs/getting-started.html) decidí hacer algunas modificaciones para practicar y familiarizarme mas con la forma en la que React funciona.

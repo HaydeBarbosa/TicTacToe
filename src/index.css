@@ -210,10 +210,10 @@
   transition-duration: var(--flip-time);  
 }
 
-.coin-flip:hover {
-  /*margin: 10px;*/
+/* .coin-flip:hover {
+  margin: 10px;
   animation: rotate-scale-down-ver var(--flip-time) linear ;
-}
+} */
 
 .rotate-scale-down-ver {
   
